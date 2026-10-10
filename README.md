@@ -64,14 +64,6 @@ These are test-set scores from a single split and a single seed. The cross-valid
 ![Confusion matrix](images/confusion_matrix_rf.png)
 ![Feature importance](images/feature_importance_rf.png)
 
-## Known limitations and next steps
-
-- The Random Forest cross-validation was run on data that was already cleaned, imputed, encoded, scaled, balanced with SMOTE and feature-selected using the whole training set. Synthetic samples and fitted statistics leak into the validation folds, so those CV scores are not a valid estimate of generalization and should not be compared with the test score.
-- To fix it, every learned step must be fitted inside each CV training fold: imputation and encoding, scaling, SMOTE, feature selection and the model, in that order, in one `imblearn` Pipeline. Outlier removal drops rows, so it needs a custom row-removing step (for example `imblearn`'s `FunctionSampler`). The simpler option is to drop that step and compare models without outlier removal.
-- Replace `ffill` with `SimpleImputer`.
-- Print how many rows the outlier step removes, and compare results with and without it.
-- Try `SMOTENC` or `class_weight="balanced"`, since SMOTE produces fractional values in one-hot columns.
-- Choose models with cross-validation instead of the test set.
 
 ## Run
 
